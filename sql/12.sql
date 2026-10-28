@@ -6,3 +6,15 @@
  * Create a select statement that lists the titles of all tables with the 'Trailers' special_feature.
  * Inner join the queries above.
  */
+SELECT title
+FROM (
+    SELECT title
+    FROM film
+    WHERE 'Behind the Scenes' IN (SELECT unnest(special_features))
+) AS bts
+JOIN (
+    SELECT title
+    FROM film
+    WHERE 'Trailers' IN (SELECT unnest(special_features))
+) AS trailers USING (title)
+ORDER BY title;
